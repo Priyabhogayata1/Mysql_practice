@@ -1,0 +1,59 @@
+﻿Mysql Excercise :
+
+* Database Select  *
+
+use priyab;
+
+* Create Tables *
+
+create table Department (did varchar(10) primary key, dname text(10), cdate date); 
+
+create table Employee (eid varchar(10) primary key, ename text(10), d_id varchar(10) ,jdate date, edate date, foreign key(d_id) references Department(did));
+
+
+create table Salary (sid varchar(10) primary key, e_id varchar(10), mon varchar(10) ,yr int(10), amount int(10), g_date date ,
+foreign key(e_id) references Employee(eid));
+
+* Insert Data *
+
+insert into Department(did, dname, cdate) values (1, 'computer', '2020/9/17');
+insert into Department(did, dname, cdate) values (2, 'it', '2020/8/18');
+insert into Department(did, dname, cdate) values (3, 'mechanical', '2020/10/20');
+
+
+select * from Department;
+
+
+insert into Employee(eid, ename, d_id, jdate, edate) values(1, 'priya', 1, '2022/01/07', '2020/06/07');
+insert into Employee(eid, ename, d_id, jdate, edate) values(2, 'khyati', 1, '2022/01/03', '2020/06/03');
+insert into Employee(eid, ename, d_id, jdate, edate) values(3, 'kruti', 2, '2022/01/01', '2020/06/01');
+insert into Employee(eid, ename, d_id, jdate, edate) values(4, 'nidhi', 2, '2022/02/01', '2020/07/01');
+insert into Employee(eid, ename, d_id, jdate, edate) values(5, 'dhaval', 3, '2022/01/04', '2020/06/04');
+insert into Employee(eid, ename, d_id, jdate, edate) values(6, 'dixit', 3, '2022/01/01', '2020/06/01');
+
+select * from Employee;
+
+
+insert into Salary(sid, e_id, mon, yr, amount, g_date) values(1, 1, 'february', '2022', 10000, '2022/02/07');
+insert into Salary(sid, e_id, mon, yr, amount, g_date) values(2, 2, 'january', '2021', 12000, '2021/01/01');
+insert into Salary(sid, e_id, mon, yr, amount, g_date) values(3, 3, 'january', '2022', 14000, '2022/01/01');
+insert into Salary(sid, e_id, mon, yr, amount, g_date) values(4, 4, 'march', '2023', 16000, '2023/03/01');
+insert into Salary(sid, e_id, mon, yr, amount, g_date) values(5, 5, 'april', '2023', 16000, '2023/04/01');
+insert into Salary(sid, e_id, mon, yr, amount, g_date) values(6, 6, 'may', '2023', 18000, '2023/05/01');
+
+select * from Salary;
+
+* Display records*
+
+select Employee.eid  as Employee_id, Employee.ename as Name, Department.dname as Department , Employee.jdate as Joinig, 
+Employee.edate as Ending, Salary.amount as Salary from Employee, Department, Salary
+where Employee.d_id = Department.did and Salary.e_id = Employee.eid;
+
+*Update record *
+
+update Salary set amount = 20000 where e_id in(select eid from Employee where ename = 'priya');	
+ 
+
+* Delete record *
+
+ DELETE FROM Employee WHERE eid IN (SELECT e_id FROM Salary WHERE sid = '1');
